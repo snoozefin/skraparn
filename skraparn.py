@@ -32,14 +32,18 @@ class Skraparn:
         #Returns HTML
         return self.content[url].text
 
+    def count_occurence(self, substring):
+        for key, value in self.content.items():
+            print("{} was found {} times in {}".format(substring, value.text.count(substring), key))
 
 print("\nSkraparn 3000\n\n")
 
 #List of urls to visit
-urls = ["www.expressen.se", "www.aftonbladet.se"]
+urls = ["www.expressen.se", "www.aftonbladet.se", "www.dn.se", "www.svt.se", "www.di.se"]
 #Create new Skraparn object
 sk = Skraparn()
 #Get content of urls
 sk.get(urls)
+sk.count_occurence("Trump")
 #Print content
 #print(sk.get_text("www.expressen.se"))
