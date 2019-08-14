@@ -8,7 +8,6 @@ class Skraparn:
 
     def get(self, urls):
         #Visit sites and get content
-
         for url in urls:
             _url = "https://" + url
             print("opening: " + _url)
@@ -19,7 +18,6 @@ class Skraparn:
 
     def filter(self, url):
         #Regexp to filter content from self.content[url]
-
         exp = re.compile()
         match = exp.search(self.content.text)
 
@@ -28,11 +26,22 @@ class Skraparn:
         exp = re.compile()
         match = exp.search(self.content.text)
 
+    def find_links(self):
+        # Find all links in self.content
+        links = set()
+        exp = re.compile(r"(https://|http://|www\.).+?(\.se|\.com?=^,)")
+        for cont in self.content.values():
+            matchIter = exp.finditer(cont.text)
+            for match in matchIter:
+                links.add(match.group())
+        print(*links, sep="\n")
+
     def get_text(self, url):
         #Returns HTML
         return self.content[url].text
 
     def count_occurence(self, substring):
+        # Counts number of occurences of substring in content
         for key, value in self.content.items():
             print("{} was found {} times in {}".format(substring, value.text.count(substring), key))
 
@@ -45,5 +54,6 @@ sk = Skraparn()
 #Get content of urls
 sk.get(urls)
 sk.count_occurence("Trump")
+sk.find_links()
 #Print content
 #print(sk.get_text("www.expressen.se"))
